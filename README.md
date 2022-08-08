@@ -22,8 +22,7 @@ Example of what CANDataDecoded.json could look like:
             "Actual Engine - Percent Torque": "38.0 %",
             "Engine Speed": "1605.5 rpm",
             "Source Address of Controlling Device for Engine Control": "0.0 source address",
-            "Engine Starter Mode": "start not requested",
-            "Engine Demand \u2013 Percent Torque": "38.0 %"
+            "Engine Starter Mode": "start not requested"
         }
     },
     "(000.005145) can1 18FEDF00 [8] 8AA0287D7DFFFFF5": {
