@@ -107,7 +107,7 @@ Example of what CANDataSPNDecoded.json format (most likely will have a lot more 
     }
 }
 ```
-This file can be imported and the function CANDataSPNDecode can be used in other python files to do stuff with the data. CANDataSPNDecode takes in the CAN log file and the J1939 json file and returns a dictionary with the decoded information. 
+This file can be imported and the function CANDataSPNDecode can be used in other python files to plot or manipulate the data. CANDataSPNDecode takes in the CAN log file and the J1939 json file and returns a dictionary with the decoded information. 
 
 Example code of plotting rpm from CAN data using CANDataSPNDecode function:
 ```
