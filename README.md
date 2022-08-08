@@ -2,7 +2,7 @@
 
 These python files are used to decode CAN data and put the results in a json file.
 
-Requires the json file that is generated from J1939toJSON.py in SystemsCyber/J1939Converters, which requires a copy of the J1939 Digital Annex.
+Requires the json file that is generated from J1939toJSON.py in https://github.com/SystemsCyber/J1939Converters. Also requires a copy of the J1939 Digital Annex.
 
 ## CANDataDecoder.py
 This decoder is used for displaying decoded CAN data. It displays the CAN log message, the pgn label, the spn label, and the value and unit corresponding to each spn. This information is put into a dictionary and then written to a json file called CANDataDecoded.json.
