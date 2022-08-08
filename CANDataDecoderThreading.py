@@ -15,13 +15,15 @@ file = ""
 for i, arg in enumerate(sys.argv):
     if(i==1):
         file = arg
+    elif(i==2):
+        jsonFile = arg
 with open(file, "r") as file:
     data = file.read()
 
 
 #Open and Read J1939 json file
-with open("J1939DA_MAY2022.json", "r") as jsonFile:
-    jsonData = json.load(jsonFile) 
+with open(jsonFile, "r") as file:
+    jsonData = json.load(file) 
 
 #Split the data and get rid of spaces
 if(data[0] == " "):
@@ -92,4 +94,3 @@ result.update(result7)
 
 with open("CANDataDecoded.json", "w") as outfile:
     outfile.write(json.dumps(result, indent=4))
-
