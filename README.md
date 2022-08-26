@@ -135,6 +135,10 @@ plt.ylabel(decodedData[pgn][spn]["Unit"])
 plt.plot(timeData, rpmData)
 plt.show()
 ```
+Example of running:
+```
+python3 CANDataPlotter.py example.log J1939DA.json 
+```
 
 ## CANDataDecoderThreading.py
 This decoder has the same result as CANDataDecoder.py, but it is used for larger CAN data files that might take too long to decode. It creates 8 threads and splits the CAN Data into 8 sections. It then runs CANDataDecoder.py in each thread and then writes it to CANDataDecoded.json.
