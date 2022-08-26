@@ -112,8 +112,17 @@ Example code of plotting rpm from CAN data using CANDataSPNDecode function:
 ```
 from CANDataSPNDecoder import CANDataSPNDecode
 import matplotlib.pyplot as plt
+import sys
 
-decodedData = CANDataSPNDecode("example.log", "J1939DA.json")
+file = ""
+jsonFile = ""
+for i, arg in enumerate(sys.argv):
+    if(i==1):
+        file = arg
+    elif(i==2):
+        jsonFile = arg
+        
+decodedData = CANDataSPNDecode(file,  jsonFile)
 rpmData = decodedData["61444"]["190"]["data"]
 timeData = decodedData["61444"]["190"]["time"]
 
