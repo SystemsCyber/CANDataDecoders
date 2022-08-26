@@ -121,14 +121,17 @@ for i, arg in enumerate(sys.argv):
         file = arg
     elif(i==2):
         jsonFile = arg
-        
-decodedData = CANDataSPNDecode(file,  jsonFile)
-rpmData = decodedData["61444"]["190"]["data"]
-timeData = decodedData["61444"]["190"]["time"]
 
-plt.title(decodedData["61444"]["190"]["SPLabel"]) 
+pgn = "61444"
+spn = "190"
+
+decodedData = CANDataSPNDecode(file,  jsonFile)
+rpmData = decodedData[pgn][spn]["data"]
+timeData = decodedData[pgn][spn]["time"]
+
+plt.title(decodedData[pgn][spn]["SPLabel"]) 
 plt.xlabel("seconds")
-plt.ylabel(decodedData["61444"]["190"]["Unit"])
+plt.ylabel(decodedData[pgn][spn]["Unit"])
 plt.plot(timeData, rpmData)
 plt.show()
 ```
