@@ -27,23 +27,39 @@ def CANDataSPNDecode(file, jsonFile):
     byteData = []
     numOfBytes= []
     CANData = []
+    cantype = []
 
     #Parses CAN data into four lists, which are time, ID, data bytes, and byte data length
+    #If timestamps are not in the data, then it has a case to check for it
     for i in range(0, len(organizedData)):
         split = re.split("   |  ", organizedData[i])
+        if(split[0][0] == "("):
+            time.append(split[0][1:len(split[0])-1])
+            cantype.append(split[1])
+            dataID.append(split[2])
+            numOfBytes.append(split[3][1:2])
+            byteData.append(split[4])
 
-        time.append(split[0][1:len(split[0])-1])
-        dataID.append(split[2])
-        numOfBytes.append(split[3][1:2])
-        byteData.append(split[4])
-
-        bytesCombined = ""
-        splitbytes = split[4].split(" ")
-        for i in range(0, len(splitbytes)):
-            bytesCombined = bytesCombined + splitbytes[i]
+            bytesCombined = ""
+            splitbytes = split[4].split(" ")
+            for i in range(0, len(splitbytes)):
+                bytesCombined = bytesCombined + splitbytes[i]
 
 
-        CANData.append(split[0] + " " + split[1] + " " + split[2] + " " + split[3] + " " + bytesCombined)
+            CANData.append(split[0] + " " + split[1] + " " + split[2] + " " + split[3] + " " + bytesCombined)
+        else:
+            cantype.append(split[0])
+            dataID.append(split[1])
+            numOfBytes.append(split[2][1:2])
+            byteData.append(split[3])
+
+            bytesCombined = ""
+            splitbytes = split[3].split(" ")
+            for i in range(0, len(splitbytes)):
+                bytesCombined = bytesCombined + splitbytes[i]
+
+
+            CANData.append(split[0] + " " + split[1] + " " + split[2] + " " + split[3] + " " + bytesCombined)
 
     #Analyze CAN data
     for i in range(0, len(dataID)):
@@ -105,7 +121,8 @@ def CANDataSPNDecode(file, jsonFile):
                 if(spLength[1] == "bits" or spLength[1] == "bit"):
                     data = int(val[SPNStartBit:SPNStartBit+bitLength]) *float(jsonData["SPN"][spnList[j]]["Scale (Value Only)"]) +float(jsonData["SPN"][spnList[j]]["Offset (Value Only)"])
                     returnJson[pgn][spnList[j]]["data"].append(int(data))
-                    returnJson[pgn][spnList[j]]["time"].append(float(time[i]))
+                    if(split[0][0] == "("):
+                        returnJson[pgn][spnList[j]]["time"].append(float(time[i]))
                     continue
 
 
@@ -124,7 +141,8 @@ def CANDataSPNDecode(file, jsonFile):
 
                 if(float(jsonData["SPN"][spnList[j]]["Offset (Value Only)"]) <= data <= float(jsonData["SPN"][spnList[j]]["RangeMax (Value Only)"])):
                     returnJson[pgn][spnList[j]]["data"].append(data)
-                    returnJson[pgn][spnList[j]]["time"].append(float(time[i]))
+                    if(split[0][0] == "("):
+                        returnJson[pgn][spnList[j]]["time"].append(float(time[i]))
 
         else:
             #If the pgn is not in the dictionary, then add it into the dictionary and declare the SPNs and add in data into lists
@@ -142,7 +160,8 @@ def CANDataSPNDecode(file, jsonFile):
                 returnJson[pgn][spnList[j]]["SPLabel"] = jsonData["SPN"][spnList[j]]["SP Label"]
                 returnJson[pgn][spnList[j]]["Unit"] = jsonData["SPN"][spnList[j]]["Unit"]
                 returnJson[pgn][spnList[j]]["data"] = []
-                returnJson[pgn][spnList[j]]["time"] = []
+                if(split[0][0] == "("):
+                    returnJson[pgn][spnList[j]]["time"] = []
 
 
 
@@ -177,7 +196,8 @@ def CANDataSPNDecode(file, jsonFile):
                 if(spLength[1] == "bits" or spLength[1] == "bit"):
                     data = int(val[SPNStartBit:SPNStartBit+bitLength]) *float(jsonData["SPN"][spnList[j]]["Scale (Value Only)"]) +float(jsonData["SPN"][spnList[j]]["Offset (Value Only)"])
                     returnJson[pgn][spnList[j]]["data"].append(int(data))
-                    returnJson[pgn][spnList[j]]["time"].append(float(time[i]))
+                    if(split[0][0] == "("):
+                        returnJson[pgn][spnList[j]]["time"].append(float(time[i]))
                     continue
 
                 #Parse the binary value into the specific SPN data range
@@ -194,7 +214,8 @@ def CANDataSPNDecode(file, jsonFile):
 
                 if(float(jsonData["SPN"][spnList[j]]["Offset (Value Only)"]) <= data <= float(jsonData["SPN"][spnList[j]]["RangeMax (Value Only)"])):
                     returnJson[pgn][spnList[j]]["data"].append(data)
-                    returnJson[pgn][spnList[j]]["time"].append(float(time[i]))
+                    if(split[0][0] == "("):
+                        returnJson[pgn][spnList[j]]["time"].append(float(time[i]))
 
     return returnJson
 
