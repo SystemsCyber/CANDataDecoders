@@ -109,6 +109,7 @@ Example of what CANDataSPNDecoded.json format (most likely will have a lot more 
 This file can be imported and the function CANDataSPNDecode can be used in other python files to plot or manipulate the data. CANDataSPNDecode takes in the CAN log file and the J1939 json file and returns a dictionary with the decoded information. 
 
 Example code of plotting rpm from CAN data using CANDataSPNDecode function (Edit PGN and SPN in code to change what plots):
+(Also, be aware if the data file has timestamps or not. The CANDataPlotter.py program is good to use because it works with and without timestamps. Below is just an example assuming there is timestamps in the file and to show how to use it.)
 ```
 from CANDataSPNDecoder import CANDataSPNDecode
 import matplotlib.pyplot as plt
