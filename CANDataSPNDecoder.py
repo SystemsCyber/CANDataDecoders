@@ -63,6 +63,9 @@ def CANDataSPNDecode(file, jsonFile):
 
     #Analyze CAN data
     for i in range(0, len(dataID)):
+        
+        #if(cantype[i] != "can1"):
+        #    continue
 
         #Checks byte amount
         if(len(dataID[i]) < 8):
